@@ -2,8 +2,8 @@ name: Telegram Bot Server
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
+  schedule:
+    - cron: "0 */5 * * *"   # كل 5 ساعات
 
 jobs:
   bot:
