@@ -1,0 +1,37 @@
+# ═══════════════════════════════════════════════════════════
+#  bot.yml — Telegram Bot Server (Long Polling)
+#  المسار في المشروع: .github/workflows/bot.yml
+#
+#  يُشغّل البوت بشكل مستمر لاستقبال رسائل المستخدمين
+#  وحفظ chat_ids الجدد في Firebase
+# ═══════════════════════════════════════════════════════════
+
+name: Telegram Bot Server
+
+on:
+  workflow_dispatch:   # تشغيل يدوي من GitHub Actions UI
+  push:
+    branches: [main]   # يبدأ تلقائياً عند كل push للـ main
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350   # أقصى وقت على GitHub Actions = 6 ساعات
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install axios
+
+      - name: Run Telegram Bot
+        env:
+          FIREBASE_DB_URL:  https://crash-13b94-default-rtdb.firebaseio.com
+          TELEGRAM_TOKEN:   ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          BOT_PASSWORD:     ${{ secrets.BOT_PASSWORD }}
+        run: node .github/scripts/bot.js
