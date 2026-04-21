@@ -1,0 +1,9 @@
+{
+  "name": "telegram-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot with subscription system",
+  "main": "bot.js",
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}
